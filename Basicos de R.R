@@ -17,8 +17,7 @@ seq(length=9, from=1, to=5)
 # Crear objetos
 X <-1:7 #indicamos que llame "X" a la secuencia, es decir que cree un objeto conteniendo a esa secuencia
 X #ahora podemos invocar al objeto cuando querramos y ver qu? valores lo componen
-Y<-c(10,15,20,25,30,35,40) #"c" combinamos los valores indicados y creamos un objeto que los contenga
-a todos
+Y<-c(10,15,20,25,30,35,40) #"c" combinamos los valores indicados y creamos un objeto que los contenga a todos
 Y
 #cargar base de datos desde un Excel
 library("readxl")
@@ -30,8 +29,8 @@ Data <- read_excel("BaseDatosFINAL.xlsx",sheet= 1)
 View(Data)
 #nombres de las variables (primera fila de nuestra base de datos)
 names(Data)
-#cual es la estructura de la base de datos o de una variable en particular. Que tipo de variable le asignó el
-programa a cada variable.
+#cual es la estructura de la base de datos o de una variable en particular. 
+#Que tipo de variable le asignó el programa a cada variable.
 str(Data)
 str(Data$Estacion)
 
