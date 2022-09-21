@@ -33,12 +33,23 @@ names(Data)
 #Que tipo de variable le asignó el programa a cada variable.
 str(Data)
 str(Data$Estacion)
-
+class(Data)
 summary(Data)
 #pedirle el nombre de los niveles de una variable categorica (ejmeplo: Estación del año)
 levels(Data$Estacion)
 #Ordenar orden de niveles de variable categorica
 Data$Estacion<-factor(Data$Estacion, ordered(c("oto", "inv","pri", "ver")))
+
+#limpieza y orden de datos
+library(tidyverse)
+library(lubridate) #para las fechas
+library(janitor)
+
+#estadistica descriptiva
+library(skimr)
+skim(Data)
+library(pastecs)
+round(stat.desc(Data$variable_continua),2)
 
 #estadística descriptiva por grupo
 library(dplyr)
@@ -52,3 +63,9 @@ table(Data$variable_categorica1, Data$variable_categorica2)
 prop.table (table(Data$variable_categorica1, Data$variable_categorica2),1)
 ###relativo a columnas
 prop.table (table(Data$variable_categorica1, Data$variable_categorica2),2)
+
+
+#Graficos
+library(esquisse)
+esquisser()
+mosaicplot(table(Data$variable_categorica1, Data$variable_categorica2), color=TRUE)
