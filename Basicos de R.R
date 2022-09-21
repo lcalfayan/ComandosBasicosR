@@ -5,9 +5,9 @@ ls()
 #limpio, para no confundirse objetos o modelos que hayan quedado guardados
 rm(list=ls())
 #setear directorio de trabajo
-#en Linux
+###en Linux
 setwd("/media/laura/D/Modelos")
-#en Windows (fijarse si windows entiende las barras / o las necesita invertida\ o quizás //)
+###en Windows (fijarse si windows entiende las barras / o las necesita invertida\ o quizás //)
 setwd("D:/LAURA/Modelos")
 
 #para generar secuencias, por ej del 1 al 5 cada 0.5:
@@ -44,4 +44,11 @@ Data$Estacion<-factor(Data$Estacion, ordered(c("oto", "inv","pri", "ver")))
 library(dplyr)
 BaseDatos %>% group_by (variable_categorica) %>% summarise (promedio=mean(variable_continua), suma= sum(variable_continua), n=n())
 # operaodr pipe %>% sirve para concatenar multiples funciones de manera anidada
-#prueba de cambio
+
+#tablas de frecuencia para variables categoricas
+table(Data$variable_categorica)
+table(Data$variable_categorica1, Data$variable_categorica2)
+###relativo a filas
+prop.table (table(Data$variable_categorica1, Data$variable_categorica2),1)
+###relativo a columnas
+prop.table (table(Data$variable_categorica1, Data$variable_categorica2),2)
