@@ -2,7 +2,7 @@
 # Para ver los elementos que hay en el "Environment" listados
 ls()
 # Para borrar todos los elementos que tenemos listados. Siempre conviene empezar con el "Environment"
-limpio, para no confundirse objetos o modelos que hayan quedado guardados
+#limpio, para no confundirse objetos o modelos que hayan quedado guardados
 rm(list=ls())
 #setear directorio de trabajo
 #en Linux
