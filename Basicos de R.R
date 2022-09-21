@@ -45,3 +45,4 @@ Data$Estacion<-factor(Data$Estacion, ordered(c("oto", "inv","pri", "ver")))
 library(dplyr)
 BaseDatos %>% group_by (variable categorica) %>% summarise (promedio=mean(variable continua), suma= sum(variable continua), n=n())
 # operaodr pipe %>% sirve para concatenar multiples funciones de manera anidada
+#prueba de cambio
