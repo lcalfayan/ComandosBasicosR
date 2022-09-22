@@ -36,11 +36,13 @@ Data <- read_excel("BaseDatosFINAL.xlsx",sheet= 1)
 View(Data)
 #nombres de las variables (primera fila de nuestra base de datos)
 names(Data)
-#cual es la estructura de la base de datos o de una variable en particular. 
-#Que tipo de variable le asignó el programa a cada variable.
+
+#Cual es la clase de objeto que interpretó el programa
+class(Data)
+#cual es la estructura de un objeto (ej: base de datos o de una variable en particular) 
 str(Data)
 str(Data$Estacion)
-class(Data)
+
 summary(Data)
 #pedirle el nombre de los niveles de una variable categorica (ejmeplo: Estación del año)
 levels(Data$Estacion)
