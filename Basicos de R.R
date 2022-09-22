@@ -19,6 +19,13 @@ X <-1:7 #indicamos que llame "X" a la secuencia, es decir que cree un objeto con
 X #ahora podemos invocar al objeto cuando querramos y ver qu? valores lo componen
 Y<-c(10,15,20,25,30,35,40) #"c" combinamos los valores indicados y creamos un objeto que los contenga a todos
 Y
+
+#cargar datos de texto plano
+read.csv(archivo.csv) #lee archivos delimitados por coma
+read.csv2(archivo.csv) #lee archivos separados por punto y coma, y la coma es utilizada para separar decimales
+read.delim(archivo.txt, header=TRUE, sep="\t", dec=".") #lee archivos con cualquier delimitador, sep="\t" indica sepracion por tabulaciones
+
+
 #cargar base de datos desde un Excel
 library("readxl")
 Data <- read_excel("/media/laura/D/Modelos/BaseDatosFINAL.xlsx",sheet= 1)
