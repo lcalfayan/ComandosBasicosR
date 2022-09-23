@@ -51,7 +51,7 @@ Data$Estacion<-factor(Data$Estacion, ordered(c("oto", "inv","pri", "ver")))
 
 #limpieza y orden de datos
 library(tidyverse)
-library(lubridate) #para las fechas
+library(lubridate) #para las fechas, ahora ya esta incluido dentro del paquete tidyverse
 library(janitor)
 
 #estadistica descriptiva
