@@ -42,13 +42,14 @@ names(Data)
 
 #Cual es la clase de objeto que interpretó el programa
 class(Data)
+class(Data$variable)
 #cual es la estructura de un objeto (ej: base de datos o de una variable en particular) 
 str(Data)
-str(Data$Estacion)
+str(Data$variable)
 
 summary(Data)
 #pedirle el nombre de los niveles de una variable categorica (ejmeplo: Estación del año)
-levels(Data$Estacion)
+levels(Data$variable_categorica)
 #Ordenar orden de niveles de variable categorica
 Data$Estacion<-factor(Data$Estacion, ordered(c("oto", "inv","pri", "ver")))
 
@@ -80,4 +81,7 @@ prop.table (table(Data$variable_categorica1, Data$variable_categorica2),2)
 #Graficos
 library(esquisse)
 esquisser()
+
+ggplot(Data, aes(x=variable_x, y=variable_y)) + geom_point()+ xlim(0,max(x))+ylim(0,max(y))
+
 mosaicplot(table(Data$variable_categorica1, Data$variable_categorica2), color=TRUE)
