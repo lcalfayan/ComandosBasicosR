@@ -78,7 +78,87 @@ prop.table (table(Data$variable_categorica1, Data$variable_categorica2),1)
 prop.table (table(Data$variable_categorica1, Data$variable_categorica2),2)
 
 
+###Armado y selaccion de modelos
+#Hay muchos paquetes para hacer distintos tipos de modelos
+library(glmmTMB)
+#modelo nulo
+M0 <- glmTMB(VR~1, data=Data, family=poisson(link="log"), offset(Continuo))
+M0 <- glmTMB(VR~1, data=Data, family=binomial(link="logit"), weights= n)
+summary(M0)
+AIC(M0)
+#si tengo alguna variable aleatoria (por ejemplo medidas repetidas de un sitio en el tiempo), la tengo que incorporar en el modleo nulo
+M0 <- glmTMB(VR~(1|variable_aleatoria), data=Data, family=poisson(link="logit"), offset(Continuo))
+
+
+## Construcción de modelos
+### por pasos hacia adelante:
+add1(M0, scope= ~VE1+VE2+VE3+VE4+VE5, test="Chisq")
+M1 <- update(M0, .~. + VE_seleccionada)
+### por pasos hacia atras:
+drop1(Modelo_completo, test="Chisq")
+
+#Para chequier que no haya correlacion entre variables
+library(performance)
+check_collinearity(Modelo)
+library(car)
+vif(modelo)
+
+#Para validar los modelos
+library(DHARMa)
+residuos <- simulateResiduals(fittedModel = Modelo, plot=TRUE)
+plotQQunif(residuos)
+plotResiduals(residuos)
+plotResiduals(residuos, Data$VE)
+hist(residuos)
+testZeroInflation(residuos)
+testDispersion(residuos)
+testDispersion(residuos, alternative = "less") # para ver si hay subdispersion
+testDispersion(residuos, alternative = "greater") # para ver si hay sobredispersion
+
+#Para graficar los efectos parciales de las VE de un modelo
+library(carData)#lo necesita el paquete "effects"
+library(effects)
+plot(predictorEffects(Modelo_final), tyoe="response")
+plot(Effect("VE", Modelo_final), type= "response",
+     main="titulo", xlab="nombre eje x", ylab="nombre eje y", lines=list(col="Black"))
+#para graficar una interaccion
+plot(Effect(c("VE1", "VE2"), Modelo_final), tyoe="response")
+plot(predictorEffect(c("VE_categorica_en_ eje_x"), Modelo_final), lines=list(multiline=TRUE, col=c("grey", "black")),
+     type="response", main="", xlab="nombre eje x", ylab="nombre eje y",
+     confint=list(style="bars"), #modo de graficar el error (ej: banda o barras)
+     lattice=list(key.args=list(space="right", columns=1, border=FALSE, cex=0.8, cex.title=0.8))) #para configurar las referencias
+#comparacion de modelos
+AIC(M0, Modelo_final)
+anova(M0, Modelo_final)
+
+#salida de modelo final
+summary(Modelo_final)
+confint(Modelo_final, level = 0.95) #los calcula en escala del predictor lineal, quizas convenga pasarlos a escala de la variable respuesta
+
+#si hago modelos inflados en cero, puedo pedir los coeficientes de la parte condicional (la parte que modela los conteos) y los coeficientes de la parte inflada en cero 
+coef.cond <- fixef(Modelo_final)$cond
+coef.zi <- fixef(Modelo_final)$zi
+#para pasar los coeficientes de la escala del predictor lineal a la escala de la variable respuestaa, tengo que hacer la inversa de la funcion de enlace
+library(boot)
+inv.logit(coef.cond)
+#formula manual para calcular la inversa del logit
+exp(-0.9)/(1+exp(-0.9))
+
+#contrastes a posteriori (VE categoricas de mas de 2 niveles)
+#para efectos simples:
+library(multcomp)
+Comparaciones <- glht(Modelo_final, linfct=mcp(VE_categorica = "Tukey"))
+summary(Comparaciones)
+#para contrastes de interaccion
+library(emmeans)
+lsmeans(Modelo_final, pairwise~VE_categorica1*VE_categorica2, adjunst= "tukey")
+
 #Graficos
+#para abrir los graficos en otra venatana y poder configurar el tamaño del area del grafico
+windows() #en Windows
+X11(width=10, height=5) #en Linux
+
+#paquete que me ayuda a armar graficos en ggplot con un entorno mas amigable con botones
 library(esquisse)
 esquisser()
 
