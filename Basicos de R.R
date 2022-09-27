@@ -115,6 +115,29 @@ testDispersion(residuos)
 testDispersion(residuos, alternative = "less") # para ver si hay subdispersion
 testDispersion(residuos, alternative = "greater") # para ver si hay sobredispersion
 
+#cuando hice un modelo logistico (VR bernoulli o binomial dicotomica, tipo presencia/ausencia) tengo que calcular un Indice de Concordancia Kappa
+library(PresenceAbsence)
+#1) Armar una tabla con los valores observados, valores predichos y un ID de cada observacion (con el orden: ID, Observados, Predichos)
+Predichos <- predict(Modelo_final, type="response")
+Observados <- Data$VR[is.na(Data$VR)==F] #is.na=False sirve para sacar los casos son datos (NA) de la variable respuesta, si es que tengo
+ID <- 1:lenght(Observados)
+DataKappa <- data.frame(cbind(ID, Observados, Predichos))
+#2) Graficos diagnostico: curva ROC, Sensibilidad vs Especifividad, observados vs predichos
+presence.absence.summary(DataKappa)
+#3) Calculo el umbral optimo por el metodo "MaxKappa", que busca el valor umbral que maximiza el valor del indice.
+optimal.thresholds(DATA= DataKappa, opt.methods = "MaxKappa")
+#4) Poner aca el valor de umbral que me tiro arriba ("threshold")
+presence.absence.accuracy(DataKappa, threshold = 0.5)
+#INTERPRETACION: Los valores de referencia para interpretar el grado de concordancia fueron los siguientes (Cohen, 1960): 
+#cero, sin acuerdo entre datos observados y predichos; 
+#0,01 - 0,20 grado de acuerdo insignificante; 
+#0,21 - 0,40 grado de acuerdo discreto; 
+#0,41 - 0,60 grado de acuerdo moderado; 
+#0,61 - 0,80 grado de acuerdo sustancial; 
+#0,81 - 1,00 grado de acuerdo casi perfecto.
+
+
+
 #Para graficar los efectos parciales de las VE de un modelo
 library(carData)#lo necesita el paquete "effects"
 library(effects)
