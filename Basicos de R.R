@@ -25,12 +25,15 @@ read.csv(archivo.csv) #lee archivos delimitados por coma
 read.csv2(archivo.csv) #lee archivos separados por punto y coma, y la coma es utilizada para separar decimales
 read.delim(archivo.txt, header=TRUE, sep="\t", dec=".") #lee archivos con cualquier delimitador, sep="\t" indica sepracion por tabulaciones
 
-
 #cargar base de datos desde un Excel
 library("readxl")
 Data <- read_excel("/media/laura/D/Modelos/BaseDatosFINAL.xlsx",sheet= 1)
 #si ya setié el directorio de trabajo, va a buscar directo ahí el archivo:
 Data <- read_excel("BaseDatosFINAL.xlsx",sheet= 1)
+
+#exportar una tabla de datos
+write.csv(NombreTabla, file="Directorio/donde/guardar/NombreTabla.csv")
+write.table (NombreTabla, file="Directorio/donde/guardar/NombreTabla.txt", sep="\t", dec=",") 
 
 #visualizar la base de datos
 View(Data)
