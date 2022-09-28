@@ -213,4 +213,4 @@ plot(variograma)
 ajuste <- vgm(psill=200,"Sph",range=3000,nugget=100)
 plot(variograma, ajuste, col="black", xlab="distance (meters)")
 ?vgm
-
+#prueba
