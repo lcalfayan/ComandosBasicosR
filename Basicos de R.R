@@ -72,7 +72,8 @@ round(stat.desc(Data$variable_continua),2)
 
 #estadística descriptiva por grupo
 library(dplyr)
-BaseDatos %>% group_by (variable_categorica) %>% summarise (promedio=mean(variable_continua), suma= sum(variable_continua), n=n())
+BaseDatos %>% group_by (variable_categorica) %>% 
+  summarise (promedio=mean(variable_continua), suma= sum(variable_continua), n=n())
 # operaodr pipe %>% sirve para concatenar multiples funciones de manera anidada
 
 # Tablas de frecuencia para variables categoricas
@@ -150,7 +151,7 @@ plot(predictorEffects(Modelo_final), tyoe="response")
 plot(Effect("VE", Modelo_final), type= "response",
      main="titulo", xlab="nombre eje x", ylab="nombre eje y", lines=list(col="Black"))
 #para graficar una interaccion
-plot(Effect(c("VE1", "VE2"), Modelo_final), tyoe="response")
+plot(Effect(c("VE1", "VE2"), Modelo_final), type="response")
 plot(predictorEffect(c("VE_categorica_en_ eje_x"), Modelo_final), lines=list(multiline=TRUE, col=c("grey", "black")),
      type="response", main="", xlab="nombre eje x", ylab="nombre eje y",
      confint=list(style="bars"), #modo de graficar el error (ej: banda o barras)
