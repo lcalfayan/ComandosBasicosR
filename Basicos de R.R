@@ -90,12 +90,12 @@ prop.table (table(Data$variable_categorica1, Data$variable_categorica2),2)
 # uno que me gusta mucho por la plasticidad que tiene de cambiar entre distintos tipos de modelos es el glmmTMB
 library(glmmTMB)
 #modelo nulo
-M0 <- glmTMB(VR~1, data=Data, family=poisson(link="log"), offset(Continuo))
-M0 <- glmTMB(VR~1, data=Data, family=binomial(link="logit"), weights= n)
+M0 <- glmmTMB(VR~1, data=Data, family=poisson(link="log"), offset(Continuo))
+M0 <- glmmTMB(VR~1, data=Data, family=binomial(link="logit"), weights= n)
 summary(M0)
 AIC(M0)
 #si tengo alguna variable aleatoria (por ejemplo medidas repetidas de un sitio en el tiempo), la tengo que incorporar en el modleo nulo
-M0 <- glmTMB(VR~(1|variable_aleatoria), data=Data, family=poisson(link="logit"), offset(Continuo))
+M0 <- glmmTMB(VR~(1|variable_aleatoria), data=Data, family=poisson(link="logit"), offset(Continuo))
 
 ## Construcción de modelos
 ### por pasos hacia adelante:
