@@ -70,6 +70,29 @@ skim(Data)
 library(pastecs)
 round(stat.desc(Data$variable_continua),2)
 
+#estadística descriptiva general
+#seleccion de variables cuantitativas
+variables <- Data[,4:13]
+# Armo una tabla vacia donde volcar los resultados de los calculos del ciclo for
+tabla.desc <- data.frame(Variable = character(ncol(variables)),
+                      Mean = numeric(ncol(variables)),
+                      SD = numeric(ncol(variables)),
+                      n = integer(ncol(variables)))
+
+library(dplyr) # necesario para la funcion count
+for (i in 1:ncol(variables)) { #for-loop recorriendo por columnas
+  #calculo de estadisticos
+  nombre = names(variables[i])
+  promedio = mean(variables[ , i])
+  desvio = sd(variables[ , i])
+  N = count(variables[i])
+  #voy guardando los resultados en la tabla vacia que cree antes
+  tabla.desc$Variable[i] <- nombre
+  tabla.desc$Mean[i] <- promedio
+  tabla.desc$SD[i] <- desvio
+  tabla.desc$n[i] <- N
+  }
+
 #estadística descriptiva por grupo
 library(dplyr)
 BaseDatos %>% group_by (variable_categorica) %>% 
