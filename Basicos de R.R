@@ -170,7 +170,7 @@ presence.absence.accuracy(DataKappa, threshold = 0.5)
 # Para graficar los efectos parciales de las VE de un modelo
 library(carData)#lo necesita el paquete "effects"
 library(effects)
-plot(predictorEffects(Modelo_final), tyoe="response")
+plot(predictorEffects(Modelo_final), type="response")
 plot(Effect("VE", Modelo_final), type= "response",
      main="titulo", xlab="nombre eje x", ylab="nombre eje y", lines=list(col="Black"))
 #para graficar una interaccion
