@@ -180,6 +180,10 @@ plot(predictorEffect(c("VE_categorica_en_ eje_x"), Modelo_final), lines=list(mul
      confint=list(style="bars"), #modo de graficar el error (ej: banda o barras)
      lattice=list(key.args=list(space="right", columns=1, border=FALSE, cex=0.8, cex.title=0.8))) #para configurar las referencias
 
+#grafico de valores predichos por el modelo
+library(ggeffects)
+plot(ggpredict(Modelo_final, c("VE1", "VE2"))) #para graficar interacciones
+
 ## Comparacion de modelos candidatos
 AIC(M0, Modelo_final)
 anova(M0, Modelo_final)
